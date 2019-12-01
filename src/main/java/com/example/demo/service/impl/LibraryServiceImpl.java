@@ -27,4 +27,38 @@ public class LibraryServiceImpl implements LibraryService {
         ret.setTitle(dbBook.getTitle());
         return ret;
     }
+
+    @Override
+    public Book addBook(com.example.demo.dao.model.Book newBook) {
+        com.example.demo.dao.model.Book dbBook = bookRepository.save(newBook);
+        Book ret = new Book();
+        ret.setId(dbBook.getId());
+        ret.setTitle(dbBook.getTitle());
+        ret.setIsbn(dbBook.getIsbn());
+        ret.setDescription(dbBook.getDescription());
+        ret.setAuthor(dbBook.getAuthor());
+        return ret;
+    }
+
+    @Override
+    public Book updateBook(int bookId, com.example.demo.dao.model.Book newBook) {
+
+        com.example.demo.dao.model.Book dbBook = bookRepository.fetchBookById(bookId);
+
+        dbBook = bookRepository.save(newBook);
+
+        Book ret = new Book();
+        ret.setId(dbBook.getId());
+        ret.setTitle(dbBook.getTitle());
+        ret.setIsbn(dbBook.getIsbn());
+        ret.setDescription(dbBook.getDescription());
+        ret.setAuthor(dbBook.getAuthor());
+        return ret;
+    }
+
+    @Override
+    public String deleteBook(long bookId) {
+        bookRepository.deleteById(bookId);
+        return "Deleted succsesfully!";
+    }
 }
