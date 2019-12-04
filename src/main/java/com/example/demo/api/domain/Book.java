@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Book implements Serializable {
 
     private static final long serialVersionUID = -3110820388137782523L;
-    private Long id;
 
     private int isbn;
 
@@ -14,14 +13,6 @@ public class Book implements Serializable {
     private String author;
 
     private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public int getIsbn() {
         return isbn;

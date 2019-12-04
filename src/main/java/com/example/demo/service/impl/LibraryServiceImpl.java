@@ -3,8 +3,12 @@ package com.example.demo.service.impl;
 import com.example.demo.api.domain.Book;
 import com.example.demo.dao.repository.BookRepository;
 import com.example.demo.service.api.LibraryService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LibraryServiceImpl implements LibraryService {
@@ -22,7 +26,6 @@ public class LibraryServiceImpl implements LibraryService {
         Book ret = new Book();
         ret.setAuthor(dbBook.getAuthor());
         ret.setDescription(dbBook.getDescription());
-        ret.setId(dbBook.getId());
         ret.setIsbn(dbBook.getIsbn());
         ret.setTitle(dbBook.getTitle());
         return ret;
@@ -32,7 +35,6 @@ public class LibraryServiceImpl implements LibraryService {
     public Book addBook(com.example.demo.dao.model.Book newBook) {
         com.example.demo.dao.model.Book dbBook = bookRepository.save(newBook);
         Book ret = new Book();
-        ret.setId(dbBook.getId());
         ret.setTitle(dbBook.getTitle());
         ret.setIsbn(dbBook.getIsbn());
         ret.setDescription(dbBook.getDescription());
@@ -48,7 +50,6 @@ public class LibraryServiceImpl implements LibraryService {
         dbBook = bookRepository.save(newBook);
 
         Book ret = new Book();
-        ret.setId(dbBook.getId());
         ret.setTitle(dbBook.getTitle());
         ret.setIsbn(dbBook.getIsbn());
         ret.setDescription(dbBook.getDescription());
@@ -60,5 +61,20 @@ public class LibraryServiceImpl implements LibraryService {
     public String deleteBook(long bookId) {
         bookRepository.deleteById(bookId);
         return "Deleted succsesfully!";
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        List<com.example.demo.dao.model.Book> books =bookRepository.findAll();
+        List<Book> ret = new ArrayList<>();
+        Book arrayElementBook = new Book();
+        for(com.example.demo.dao.model.Book b: books){
+            arrayElementBook.setDescription(b.getDescription());
+            arrayElementBook.setAuthor(b.getAuthor());
+            arrayElementBook.setIsbn(b.getIsbn());
+            arrayElementBook.setTitle(b.getTitle());
+            ret.add(arrayElementBook);
+        }
+        return ret;
     }
 }
